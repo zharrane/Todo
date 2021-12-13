@@ -2,11 +2,17 @@ import { useState, useRef } from "react"
 import Filter from "../components/Filter"
 import InputField from "../components/InputField"
 import Todo from "../components/Todo"
+import { useAppSelector } from "../app/hooks"
 
 const Home = () => {
+  /** Internal state */
   const [title, setTitle] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const [filter, setFilter] = useState<string>("all")
+
+  /** Data from store */
+  const todos = useAppSelector((state) => state.todos)
+
   const textArea = useRef<HTMLTextAreaElement>(null)
 
   const handleKeyUp = (params: "input" | "textarea") => (e: any) => {
@@ -54,12 +60,15 @@ const Home = () => {
         <div className="main__body">
           {/* <div className="separator" /> */}
           <div className="main__list">
+            {Object.entries(todos).map(([key]) => (
+              <Todo key={key} id={key} />
+            ))}
+            {/* <Todo />
             <Todo />
             <Todo />
             <Todo />
             <Todo />
-            <Todo />
-            <Todo />
+            <Todo /> */}
           </div>
           <div className="main__filter">
             <Filter setFilter={setFilter} />

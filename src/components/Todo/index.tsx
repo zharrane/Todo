@@ -2,13 +2,19 @@ import { useState } from "react"
 import "./todo.scss"
 import { FaTrashAlt as Delete } from "react-icons/fa"
 import { MdOutlineDone as Done } from "react-icons/md"
-const Todo = ({ id }: any) => {
-  const [done, setDone] = useState<boolean>(false)
-  const [title, setTitle] = useState<string>("My Task")
-  const [oldTitle, setOldTitle] = useState<string>("My Task")
-  const [description, setDescription] = useState<string>(
-    "My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description My Description"
-  )
+import { useAppSelector } from "../../app/hooks"
+
+type TodoProps = {
+  id: string
+}
+
+const Todo: React.FC<TodoProps> = ({ id }) => {
+  const todo = useAppSelector((state) => state.todos[id])
+
+  //   const [done, setDone] = useState<boolean>(todo.done || false)
+  const [title, setTitle] = useState<string>(todo.title)
+  const [oldTitle, setOldTitle] = useState<string>(todo.title)
+  const [description, setDescription] = useState<string>(todo.description)
 
   const handleOnBlur = () => {
     if (title.trim() === "") {
@@ -28,12 +34,12 @@ const Todo = ({ id }: any) => {
           <input
             placeholder="Should never be empty"
             value={title}
-            className={`todo__title ${done ? "todo__done" : ""}`}
+            className={`todo__title ${todo.done ? "todo__done" : ""}`}
             onChange={(e) => setTitle(e.target.value)}
           />
           <input
             title={description}
-            className={`todo__desc ${done ? "todo__done" : ""}`}
+            className={`todo__desc ${todo.done ? "todo__done" : ""}`}
             placeholder="Missing description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -43,7 +49,7 @@ const Todo = ({ id }: any) => {
           <button onClick={() => console.log()}>
             <Delete className="todo__delete" />
           </button>
-          {!done && (
+          {!todo.done && (
             <button onClick={() => console.log()}>
               <Done className="todo__done" />
             </button>

@@ -1,4 +1,3 @@
-import "./inputField.scss"
 import clsx from "clsx"
 
 interface InputFieldProps extends React.ComponentPropsWithoutRef<"input"> {
@@ -21,7 +20,7 @@ const InputField: React.FC<InputFieldProps> = ({
     <>
       <input
         type="text"
-        className={clsx("", className)}
+        className={clsx("input__field", className)}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

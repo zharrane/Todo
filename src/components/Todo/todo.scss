@@ -1,0 +1,102 @@
+.todo__card {
+  width: 100%;
+  max-width: max-content;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  height: max-content;
+}
+
+.todo__drag {
+  cursor: grab;
+  width: 0.7rem;
+  align-self: center;
+  height: 90px;
+  border-right: 4px dotted #232323;
+  border-left: 4px dotted #232323;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.todo__main {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 5px 10px 15px;
+  background-color: var(--text-secondary);
+  border-radius: var(--border-radius);
+  input {
+    outline: none;
+    width: 100%;
+    color: var(--text-primary);
+    border: none;
+    background-color: transparent;
+    appearance: none;
+  }
+  .todo__done {
+    text-decoration: line-through;
+  }
+  .todo__title {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  .todo__desc {
+    display: block;
+    resize: none;
+    width: 100%;
+    font-size: 0.8rem;
+    /**For FF text area*/
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.todo__inputs {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
+
+.todo__icons {
+  text-align: center;
+  display: flex;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    // &:hover {
+    //   background-color: transparent;
+    //   box-shadow: 0 0 2px 0.5px #343034 inset;
+    // }
+  }
+  .todo__delete,
+  .todo__done {
+    height: 30px;
+    width: 25px;
+    color: green;
+    cursor: pointer;
+    transition: var(--duration) all ease-in-out;
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+  .todo__delete {
+    width: 20px;
+    color: brown;
+    &:hover {
+      transform: scale(1.2);
+    }
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}

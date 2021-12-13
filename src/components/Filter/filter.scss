@@ -1,0 +1,17 @@
+.filter__list {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  list-style-type: none;
+  text-transform: uppercase;
+
+  .filter__item {
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    color: var(--text-primary);
+    &:hover {
+      background-color: var(--secondary);
+    }
+  }
+}

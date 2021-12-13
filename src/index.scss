@@ -1,5 +1,6 @@
 :root {
   --duration: 0.3s;
+  --border-radius: 0.2rem;
   --primary: #161616;
   --secondary: #232323;
   --text-primary: #ededed;
@@ -13,6 +14,10 @@
   box-sizing: border-box;
 }
 
+*::selection {
+  background-color: #ff9a9e;
+  color: black;
+}
 h1,
 h2,
 h3,
@@ -31,4 +36,22 @@ p {
   background-color: var(--primary);
   align-items: center;
   overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  cursor: pointer;
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  cursor: pointer;
+  background-color: var(--primary);
+}
+::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: var(--secondary);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: var(--text-secondary);
 }

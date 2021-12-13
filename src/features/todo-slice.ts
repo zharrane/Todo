@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { loadState } from "../app/handleStorage"
 
 interface TodoState {
   title: string
@@ -6,27 +7,12 @@ interface TodoState {
   done?: boolean
   deleted?: boolean
 }
-
+const oldState = loadState().todos
 const initialState: Record<string, TodoState> = {
-  zaki: {
-    title: "zaki",
-    description: "zaki",
-    done: false,
-    deleted: false,
-  },
-  zs: {
-    title: "zaki",
-    description: "zaki",
-    done: false,
-    deleted: false,
-  },
-  s: {
-    title: "zaki",
-    description: "zaki",
-    done: true,
-    deleted: false,
-  },
+  ...oldState,
 }
+
+export type TodoList = typeof initialState
 
 const todosSlice = createSlice({
   name: "todos",

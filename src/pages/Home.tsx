@@ -1,31 +1,32 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Filter from "../components/Filter"
 import InputField from "../components/InputField"
 import Todo from "../components/Todo"
+import { BiTask as Task } from "react-icons/bi"
 import { useAppSelector } from "../app/hooks"
+import Header from "../components/Header"
+import { TodoList } from "../features/todo-slice"
 
+const filterFunc = (filter: string, todos: TodoList) => {
+  let temporary = Object.entries(todos)
+  switch (filter) {
+    case "incomplete":
+      return temporary.filter((item) => item[1]["done"] === false)
+    case "completed":
+      return temporary.filter((item) => item[1]["done"] === true)
+    default:
+      return temporary
+  }
+}
 const Home = () => {
   /** Internal state */
-  const [title, setTitle] = useState<string>("")
-  const [description, setDescription] = useState<string>("")
+
   const [filter, setFilter] = useState<string>("all")
 
   /** Data from store */
   const todos = useAppSelector((state) => state.todos)
-
-  const textArea = useRef<HTMLTextAreaElement>(null)
-
-  const handleKeyUp = (params: "input" | "textarea") => (e: any) => {
-    if (
-      (e.code === "NumpadEnter" || e.code === "Enter") &&
-      title.trim() !== ""
-    ) {
-      if (params === "input") {
-        textArea.current?.focus()
-      } else {
-      }
-    }
-  }
+  // will rerender any way
+  const filteredTodos = filterFunc(filter.toLocaleLowerCase(), todos)
 
   return (
     <main className="main__section">
@@ -35,40 +36,20 @@ const Home = () => {
       <div>
         <div className="main__header">
           <h1>TODO</h1>
-          <div className="inputs">
-            <div className="input">
-              <InputField
-                placeholder="What's on your mind?"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                onKeyUp={handleKeyUp("input")}
-              />
-            </div>
-            <div className="input">
-              <textarea
-                rows={2}
-                ref={textArea}
-                placeholder="How would you describe it?"
-                value={description}
-                className="text__area"
-                onChange={(e) => setDescription(e.target.value)}
-                onKeyUp={handleKeyUp("textarea")}
-              />
-            </div>
-          </div>
+          <Header />
         </div>
         <div className="main__body">
           {/* <div className="separator" /> */}
           <div className="main__list">
-            {Object.entries(todos).map(([key]) => (
-              <Todo key={key} id={key} />
-            ))}
-            {/* <Todo />
-            <Todo />
-            <Todo />
-            <Todo />
-            <Todo />
-            <Todo /> */}
+            {filteredTodos.length === 0 ? (
+              // Empty
+              <div className="main__empty">
+                <Task className="main__empty__img" />
+              </div>
+            ) : (
+              //Render filtered todos
+              filteredTodos.map(([key]) => <Todo key={key} id={key} />)
+            )}
           </div>
           <div className="main__filter">
             <Filter setFilter={setFilter} />

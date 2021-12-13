@@ -7,12 +7,17 @@ const filterArray = [
   },
   {
     id: 2,
-    title: "Completed",
+    title: "Incomplete",
   },
   {
     id: 3,
-    title: "Incomplete",
+    title: "Completed",
   },
+
+  // {
+  //   id: 4,
+  //   title: "Deleted",
+  // },
 ]
 
 const Filter: React.FC<{ setFilter: (title: string) => void }> = ({

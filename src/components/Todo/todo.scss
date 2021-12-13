@@ -1,6 +1,6 @@
 .todo__card {
   width: 100%;
-  max-width: max-content;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   gap: 8px;
@@ -78,10 +78,12 @@
     // }
   }
   .todo__delete,
-  .todo__done {
+  .todo__done,
+  .todo__undo {
     height: 30px;
     width: 25px;
-    color: green;
+    color: var(--text-primary);
+    opacity: 0.8;
     cursor: pointer;
     transition: var(--duration) all ease-in-out;
 
@@ -91,12 +93,21 @@
   }
   .todo__delete {
     width: 20px;
-    color: brown;
+
     &:hover {
       transform: scale(1.2);
     }
     &:active {
       transform: scale(0.9);
     }
+  }
+  .todo__undo {
+  }
+}
+
+.todo__blured {
+  filter: blur(1px);
+  &:hover {
+    filter: blur(0);
   }
 }

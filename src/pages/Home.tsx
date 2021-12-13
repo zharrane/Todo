@@ -9,13 +9,20 @@ import { TodoList } from "../features/todo-slice"
 
 const filterFunc = (filter: string, todos: TodoList) => {
   let temporary = Object.entries(todos)
+  temporary = temporary.filter((item) => item[1]["deleted"] === false)
   switch (filter) {
     case "incomplete":
       return temporary.filter((item) => item[1]["done"] === false)
     case "completed":
       return temporary.filter((item) => item[1]["done"] === true)
+    // case "deleted":
+    //   temporary = Object.entries(todos).filter(
+    //     (item) => item[1]["deleted"] === true
+    //   )
     default:
       return temporary
+        .filter((item) => item[1]["done"] === false)
+        .concat(temporary.filter((item) => item[1]["done"] === true))
   }
 }
 const Home = () => {

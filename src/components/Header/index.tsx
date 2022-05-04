@@ -1,9 +1,10 @@
 import { useRef, useState } from "react"
+
 import InputField from "../InputField"
 import { create } from "../../features/todo-slice"
 import { useAppDispatch } from "../../app/hooks"
 
-const Header = () => {
+const TodoInputs = () => {
   const dispatch = useAppDispatch()
 
   const [title, setTitle] = useState<string>("")
@@ -43,7 +44,7 @@ const Header = () => {
             ref={textArea}
             placeholder="How would you describe it?"
             value={description}
-            className="text__area"
+            className="text-area"
             onChange={(e) => setDescription(e.target.value)}
             onKeyUp={handleKeyUp("textarea")}
           />
@@ -53,4 +54,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default TodoInputs

@@ -1,4 +1,4 @@
-.todo__card {
+.card {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -7,7 +7,7 @@
   height: max-content;
 }
 
-.todo__drag {
+.drag {
   cursor: grab;
   width: 0.7rem;
   align-self: center;
@@ -19,7 +19,7 @@
   }
 }
 
-.todo__main {
+.todo-main {
   position: relative;
   display: flex;
   align-items: center;
@@ -35,32 +35,31 @@
     background-color: transparent;
     appearance: none;
   }
-  .todo__done {
+  .todo-done {
     text-decoration: line-through;
   }
-  .todo__title {
+  .todo-title {
     font-size: 2rem;
     font-weight: 500;
   }
-  .todo__desc {
+  .todo-desc {
     display: block;
     resize: none;
     width: 100%;
     font-size: 0.8rem;
-    /**For FF text area*/
     white-space: pre;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 
-.todo__inputs {
+.todo-inputs {
   display: flex;
   gap: 16px;
   flex-direction: column;
 }
 
-.todo__icons {
+.todo-icons {
   text-align: center;
   display: flex;
 
@@ -72,14 +71,10 @@
     border: none;
     padding: 5px;
     border-radius: 50%;
-    // &:hover {
-    //   background-color: transparent;
-    //   box-shadow: 0 0 2px 0.5px #343034 inset;
-    // }
   }
-  .todo__delete,
-  .todo__done,
-  .todo__undo {
+  .todo-delete,
+  .todo-done,
+  .todo-undo {
     height: 30px;
     width: 25px;
     color: var(--text-primary);
@@ -91,7 +86,7 @@
       transform: scale(0.9);
     }
   }
-  .todo__delete {
+  .todo-delete {
     width: 20px;
 
     &:hover {
@@ -101,11 +96,9 @@
       transform: scale(0.9);
     }
   }
-  .todo__undo {
-  }
 }
 
-.todo__blured {
+.todo-blured {
   filter: blur(1px);
   &:hover {
     filter: blur(0);

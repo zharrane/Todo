@@ -1,28 +1,29 @@
-import { useCallback, useState } from "react"
 import "./todo.scss"
+
+import { deleteTodo, done, modify } from "../../features/todo-slice"
+import { useCallback, useState } from "react"
+
 import { FaTrashAlt as Delete } from "react-icons/fa"
 import { MdOutlineDone as Done } from "react-icons/md"
-import { AiOutlineUndo as Undo } from "react-icons/ai"
-import { useAppSelector } from "../../app/hooks"
-import clsx from "clsx"
 import InputField from "../InputField"
+import { AiOutlineUndo as Undo } from "react-icons/ai"
+import clsx from "clsx"
 import { useAppDispatch } from "../../app/hooks"
-import { modify, deleteTodo, done } from "../../features/todo-slice"
-type TodoProps = {
+import { useAppSelector } from "../../app/hooks"
+
+type TodoCardProps = {
   id: string
 }
 
-const Todo: React.FC<TodoProps> = ({ id }) => {
+const TodoCard: React.FC<TodoCardProps> = ({ id }) => {
   const dispatch = useAppDispatch()
   const todo = useAppSelector((state) => state.todos[id])
 
   const [title, setTitle] = useState<string>(todo.title)
   const [oldTitle, setOldTitle] = useState<string>(todo.title)
   const [description, setDescription] = useState<string>(todo.description)
-  const [counter, setCounter] = useState<number>(0)
 
   const handleBlur = useCallback(() => {
-    setCounter(counter + 1)
     if (title.trim() === "") {
       setTitle(oldTitle)
     } else {
@@ -37,39 +38,37 @@ const Todo: React.FC<TodoProps> = ({ id }) => {
       })
     )
   }, [title, description])
-  /** too many rerenders */
-  console.log(`Recreation Counter : ${counter}`)
 
   return (
-    <div className="todo__card">
-      <div className="todo__drag" />
+    <div className="card">
+      <div className="drag" />
 
-      <div className="todo__main">
+      <div className="todo-main">
         <div
-          className={clsx("todo__inputs", todo.done ? "todo__blured" : "")}
+          className={clsx("todo-inputs", todo.done ? "todo-blured" : "")}
           onBlur={handleBlur}
         >
           <InputField
             placeholder="Should never be empty"
             value={title}
-            className={`todo__title ${todo.done ? "todo__done" : ""}`}
+            className={`todo-title ${todo.done ? "todo-done" : ""}`}
             onChange={(e) => setTitle(e.target.value)}
           />
           <InputField
             title={description}
-            className={`todo__desc ${todo.done ? "todo__done" : ""}`}
+            className={`todo-desc ${todo.done ? "todo-done" : ""}`}
             placeholder="Missing description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <div className="todo__icons">
+        <div className="todo-icons">
           <button
             onClick={() => {
               dispatch(deleteTodo({ id }))
             }}
           >
-            <Delete className="todo__delete" />
+            <Delete className="todo-delete" />
           </button>
           {!todo.done ? (
             <button
@@ -77,7 +76,7 @@ const Todo: React.FC<TodoProps> = ({ id }) => {
                 dispatch(done({ id }))
               }}
             >
-              <Done className="todo__done" />
+              <Done className="todo-done" />
             </button>
           ) : (
             <button
@@ -85,7 +84,7 @@ const Todo: React.FC<TodoProps> = ({ id }) => {
                 dispatch(done({ id }))
               }}
             >
-              <Undo className="todo__undo" />
+              <Undo className="todo-undo" />
             </button>
           )}
         </div>
@@ -94,4 +93,4 @@ const Todo: React.FC<TodoProps> = ({ id }) => {
   )
 }
 
-export default Todo
+export default TodoCard

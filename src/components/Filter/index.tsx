@@ -1,26 +1,30 @@
 import "./filter.scss"
 
-const filterArray = [
+import { Dispatch, SetStateAction } from "react"
+
+export type filterType = "all" | "incomplete" | "completed"
+
+type filerArrayType = {
+  id: number
+  title: filterType
+}
+
+const filterArray: filerArrayType[] = [
   {
     id: 1,
-    title: "All",
+    title: "all",
   },
   {
     id: 2,
-    title: "Incomplete",
+    title: "incomplete",
   },
   {
     id: 3,
-    title: "Completed",
+    title: "completed",
   },
-
-  // {
-  //   id: 4,
-  //   title: "Deleted",
-  // },
 ]
 
-const Filter: React.FC<{ setFilter: (title: string) => void }> = ({
+const Filter: React.FC<{ setFilter: Dispatch<SetStateAction<filterType>> }> = ({
   setFilter,
 }) => {
   return (

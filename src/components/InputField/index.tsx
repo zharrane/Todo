@@ -4,7 +4,6 @@ interface InputFieldProps extends React.ComponentPropsWithoutRef<"input"> {
   disabled?: boolean
   placeholder: string
   value: string
-  //   onChange?: (e: React.FormEvent<HTMLInputElement>) => void
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -18,7 +17,7 @@ const InputField: React.FC<InputFieldProps> = ({
     <>
       <input
         type="text"
-        className={clsx("input__field")}
+        className={clsx("input-field")}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

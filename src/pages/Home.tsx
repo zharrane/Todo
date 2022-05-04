@@ -1,64 +1,58 @@
-import { useState, useRef, useEffect } from "react"
-import Filter from "../components/Filter"
-import InputField from "../components/InputField"
-import Todo from "../components/Todo"
-import { BiTask as Task } from "react-icons/bi"
+import Filter, { filterType } from "../components/Filter"
+import { TodoList, TodoState } from "../features/todo-slice"
+
+import { BiTask as Empty } from "react-icons/bi"
+import TodoCard from "../components/Todo"
+import TodoInputs from "../components/Header"
 import { useAppSelector } from "../app/hooks"
-import Header from "../components/Header"
-import { TodoList } from "../features/todo-slice"
+import { useState } from "react"
 
-const filterFunc = (filter: string, todos: TodoList) => {
+const filterFunc = (filter: Partial<filterType>, todos: TodoList) => {
   let temporary = Object.entries(todos)
-  temporary = temporary.filter((item) => item[1]["deleted"] === false)
-  switch (filter) {
-    case "incomplete":
-      return temporary.filter((item) => item[1]["done"] === false)
-    case "completed":
-      return temporary.filter((item) => item[1]["done"] === true)
-    // case "deleted":
-    //   temporary = Object.entries(todos).filter(
-    //     (item) => item[1]["deleted"] === true
-    //   )
-    default:
-      return temporary
-        .filter((item) => item[1]["done"] === false)
-        .concat(temporary.filter((item) => item[1]["done"] === true))
+
+  temporary = temporary.filter((item) => !item[1]["deleted"])
+
+  const filterPicker: {
+    [key in filterType]: [string, TodoState][]
+  } = {
+    incomplete: temporary.filter((item) => !item[1]["done"]),
+    completed: temporary.filter((item) => item[1]["done"]),
+    all: temporary
+      .filter((item) => !item[1]["done"])
+      .concat(temporary.filter((item) => item[1]["done"])),
   }
+
+  return filterPicker[filter]
 }
+
 const Home = () => {
-  /** Internal state */
+  const [filter, setFilter] = useState<filterType>("all")
 
-  const [filter, setFilter] = useState<string>("all")
-
-  /** Data from store */
   const todos = useAppSelector((state) => state.todos)
-  // will rerender any way
-  const filteredTodos = filterFunc(filter.toLocaleLowerCase(), todos)
+
+  const filteredTodos = filterFunc(filter, todos)
 
   return (
-    <main className="main__section">
-      <div className="main__side">
+    <main className="section">
+      <div className="side">
         <h1> {filter}</h1>
       </div>
       <div>
-        <div className="main__header">
+        <div className="header">
           <h1>TODO</h1>
-          <Header />
+          <TodoInputs />
         </div>
-        <div className="main__body">
-          {/* <div className="separator" /> */}
-          <div className="main__list">
-            {filteredTodos.length === 0 ? (
-              // Empty
-              <div className="main__empty">
-                <Task className="main__empty__img" />
-              </div>
+        <div className="main">
+          <div className="list">
+            {filteredTodos.length ? (
+              filteredTodos.map(([key]) => <TodoCard key={key} id={key} />)
             ) : (
-              //Render filtered todos
-              filteredTodos.map(([key]) => <Todo key={key} id={key} />)
+              <div className="empty-list">
+                <Empty className="empty-img" />
+              </div>
             )}
           </div>
-          <div className="main__filter">
+          <div>
             <Filter setFilter={setFilter} />
           </div>
         </div>

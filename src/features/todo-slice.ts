@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+
 import { loadState } from "../app/handleStorage"
 
-interface TodoState {
+export interface TodoState {
   title: string
   description: string
   done?: boolean
